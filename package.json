@@ -1,0 +1,19 @@
+
+{
+  "name": "com.dpeter99.utils",
+  "version": "0.0.1",
+  "displayName": "Utils",
+  "description": "This package provides a Component for Unity GameObjects that allows users to add arbitrary fields to them in UnityEditor.",
+  "unity": "2021.2",
+  "keywords": [
+    "Component",
+    "GameObject",
+    "arbitrary fields"
+  ],
+  "author": {
+    "name": "dpeter99",
+    "email": "dpeter99@gmail.com",
+    "url": "https://github.com/dpeter99"
+  },
+  "hideInEditor": false
+}
