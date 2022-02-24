@@ -1,6 +1,6 @@
 {
   "name": "com.dpeter99.utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "displayName": "Utils",
   "description": "This package provides a Component for Unity GameObjects that allows users to add arbitrary fields to them in UnityEditor.",
   "unity": "2021.2",

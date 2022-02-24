@@ -23,8 +23,10 @@ namespace com.dpeter99.utils.Basic
 
             internal set
             {
+            #if UNITY_EDITOR
                 if (_instance != null)
                     throw new SingletonMultipleInstanceException(typeof(T));
+            #endif
                 _instance = value;
             }
         }
