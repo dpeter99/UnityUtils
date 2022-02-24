@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace com.dpeter99.utils.Basic
 {
@@ -12,8 +13,8 @@ namespace com.dpeter99.utils.Basic
             {
                 if (_instance == null)
                 {
-                    //throw new SingletonNotInstantiated(typeof(T));
-                    _instance = new T();
+                    throw new SingletonNotInstantiated(typeof(T));
+                    //_instance = new T();
                 }
 
                 return _instance;
