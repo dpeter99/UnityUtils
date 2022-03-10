@@ -52,8 +52,10 @@ namespace Packages.ObjectPicker
         /// The serialized property that we are picking for if it exists
         /// </summary>
         [CanBeNull] private static SerializedProperty propertyPicking;
-        
         public static SerializedProperty PropertyPicking => propertyPicking;
+
+        public static bool IsPicking => pickingType != null;
+        
         
         private const float GroupDistance = 25.0f;
         
@@ -67,12 +69,13 @@ namespace Packages.ObjectPicker
         
         private static List<Candidate> nearbyCandidates = new List<Candidate>();
 
+        private Object pickedValue;
         
         private static bool hasShownHint;
         
-        private GUIStyle cachedPickingTextStyle;
         
-
+        
+        private GUIStyle cachedPickingTextStyle;
         public GUIStyle PickingTextStyle
         {
             get
@@ -267,6 +270,20 @@ namespace Packages.ObjectPicker
             pickAction = o => callback?.Invoke((T) o);
             StartPicking(null, type, scene, null);
         }
+
+        public void StartPicking<T>(Type type, int id, EditorWindow caller)
+        {
+            //pickAction = o => callback?.Invoke((T) o);
+            pickAction = o =>
+            {
+                Event e = EditorGUIUtility.CommandEvent("SceneObjectPicker-ObjectPicked");
+                pickedValue = o as Object;
+                
+                caller.SendEvent(e);
+            };
+            
+            StartPicking(null, type, default(Scene), null);
+        }
         
         public void StartPicking(SerializedProperty property, Type type, Scene scene, string callback)
         {
@@ -368,11 +385,14 @@ namespace Packages.ObjectPicker
                 objects.AddRange(Object.FindObjectsOfType(type));
             }
 
-            // Filter out components belonging to the wrong scene.
-            for (int i = objects.Count - 1; i >= 0; i--)
+            if (pickingScene.IsValid())
             {
-                if (Utils.GetScene(objects[i]) != currentScene)
-                    objects.RemoveAt(i);
+                // Filter out components belonging to the wrong scene.
+                for (int i = objects.Count - 1; i >= 0; i--)
+                {
+                    if (Utils.GetScene(objects[i]) != currentScene)
+                        objects.RemoveAt(i);
+                }
             }
         }
 
